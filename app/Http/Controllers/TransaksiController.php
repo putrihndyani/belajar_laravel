@@ -14,8 +14,14 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $produk = DB::table('table_produk')->get();
+        $produk = DB::table('table_produk')->join('table_kategori', 'kategoriID', '=', 'table_kategori.id')
+            ->select('table_produk.*', 'table_kategori.kategori')->get();
         return view('landingpage.cardproduk', compact('produk'));
+    }
+    public function orderID(string $id)
+    {
+        $produk = DB::table('table_produk')->where('id', $id)->first();
+        return view('order.form', compact('produk'));
     }
 
     /**
@@ -25,7 +31,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        return view('order.form');
+        //
     }
 
     /**

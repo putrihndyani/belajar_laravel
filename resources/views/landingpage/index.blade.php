@@ -40,7 +40,7 @@
     <!-- Header-->
     @include('landingpage.header')
     <!-- Section-->
-    @yield('cardproduk')
+    @yield('content')
     <!-- Footer-->
     @include('landingpage.footer')
     <!-- Bootstrap core JS-->

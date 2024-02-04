@@ -17,7 +17,7 @@
                 <div class="col-md-6 p-3">
                     <div class="card card-body">
                         <h-3 class="text-center mb-3 fw-bold">Form Input Order</h-3>
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('transaksi.tambah') }}">
                             @csrf
                             <div class="form-group d-flex">
                                 <div class="col-md-6">

@@ -18,6 +18,7 @@ class CreateTableTransaksi extends Migration
             $table->unsignedBigInteger('barang_id');
             $table->integer('quantity');
             $table->string('BuktiBayar')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
             $table->foreign('barang_id')->references('id')->on('table_produk')->onDelete('cascade');
         });

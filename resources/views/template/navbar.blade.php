@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
+                        <div class="small text-gray-500">December 7, 2023</div>
                         $290.29 has been deposited into your account!
                     </div>
                 </a>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
+                        <div class="small text-gray-500">December 2, 2023</div>
                         Spending Alert: We've noticed unusually high spending for your account.
                     </div>
                 </a>

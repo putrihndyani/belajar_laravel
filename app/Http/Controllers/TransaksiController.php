@@ -14,7 +14,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $produk = DB::table('table_produk')->join('table_kategori', 'kategoriID', '=', 'table_kategori.id')
+        $produk = DB::table('table_produk')->join('table_kategori', 'table_produk.kategoriID', '=', 'table_kategori.id')
             ->select('table_produk.*', 'table_kategori.kategori')->get();
         return view('landingpage.cardproduk', compact('produk'));
     }
@@ -23,7 +23,41 @@ class TransaksiController extends Controller
         $produk = DB::table('table_produk')->where('id', $id)->first();
         return view('order.form', compact('produk'));
     }
+    public function ListTransaksi()
+    {
+        $transaksi = Db::table('table_transaksi')->join('table_produk', 'table_transaksi.barang_id', '=', 'table_produk.id')
+            ->select('table_transaksi.*', 'table_produk.*')->get();
+        return view('transaksi.list', compact('transaksi'));
+    }
+    public function uploadBukti($id)
+    {
+        $buktiID = DB::table('table_transaksi')->where('id', $id)->get();
+        return view('order.upload', compact('buktiID'));
+    }
+    public function upload(Request $request, string $id)
+    {
+        DB::table('table_transaksi')->where('id', $id)->update([
+            'BuktiBayar' => $request->buktibayar->store('foto/bukti', 'public'),
+        ]);
+        return redirect('transaksi');
+    }
+    public function status(string $id)
+    {
+        $data = DB::table('table_transaksi')->where('id', $id)->first();
 
+        $status_sekarang = $data->status;
+
+        if ($status_sekarang == 1) {
+            DB::table('table_transaksi')->where('id', $id)->update([
+                'status' => 0
+            ]);
+        } else {
+            DB::table('table_transaksi')->where('id', $id)->update([
+                'status' => 1
+            ]);
+        }
+        return redirect('transaksi');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +76,11 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('table_transaksi')->insert([
+            'barang_id' => $request->barang_id,
+            'quantity' => $request->quantity,
+        ]);
+        return redirect('transaksi');
     }
 
     /**

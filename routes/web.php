@@ -24,6 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/transaksi/status{id}', [TransaksiController::class, 'status'])->name('status');
     Route::controller(ProdukController::class)->group(function () {
         Route::get('/produk', 'index');
         Route::get('/produktambah', 'create');
@@ -40,12 +41,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/kategoriupdate/{id}', 'update');
         Route::get('/kategoridelete/{id}', 'destroy');
     });
+    // Route::get('/transaksi', [TransaksiController::class, 'ListTransaksi'])->name('transaksi');
 });
 
 
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::controller(TransaksiController::class)->group(function () {
-        Route::get('/order/{id}', 'orderID')->name('order');
-    });
+
+    Route::get('/order/{id}', [TransaksiController::class, 'orderID'])->name('order');
+    Route::post('/transaksi/save', [TransaksiController::class, 'store'])->name('transaksi.tambah');
+    Route::get('/upload/{id}', [TransaksiController::class, 'uploadBukti'])->name('upload');
+    Route::post('/uploadBukti/{id}', [TransaksiController::class, 'upload'])->name('upload.bukti');
+});
+
+Route::middleware(['auth', 'role:admin|user'])->group(function () {
+    Route::get('/transaksi', [TransaksiController::class, 'ListTransaksi'])->name('transaksi');
 });
